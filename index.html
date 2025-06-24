@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Loja - Admin</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Modal de Login -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Login Administrativo</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">E-mail:</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Senha:</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="btn">Entrar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Painel Admin -->
+    <div id="adminPanel" class="admin-panel">
+        <header>
+            <h1>Painel Administrativo</h1>
+            <button id="logoutBtn" class="btn logout-btn">Sair</button>
+        </header>
+
+        <div class="admin-content">
+            <section class="add-product">
+                <h2>Adicionar Novo Produto</h2>
+                <form id="productForm">
+                    <div class="form-group">
+                        <label for="productCategory">Categoria:</label>
+                        <select id="productCategory" required>
+                            <option value="">Selecione...</option>
+                            <option value="papelaria">Papelaria</option>
+                            <option value="eletronicos">Eletrônicos</option>
+                            <option value="cosmeticos">Cosméticos</option>
+                            <option value="livros">Livros</option>
+                            <option value="roupas">Roupas</option>
+                            <option value="alimentos">Alimentos</option>
+                            <option value="brinquedos">Brinquedos</option>
+                            <option value="casa">Casa e Jardim</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="productCode">Código:</label>
+                        <input type="text" id="productCode" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="productName">Nome:</label>
+                        <input type="text" id="productName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="productPrice">Preço (R$):</label>
+                        <input type="number" id="productPrice" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="productImages">Imagens (PNG/JPG):</label>
+                        <input type="file" id="productImages" multiple accept="image/png, image/jpeg">
+                        <div id="imagePreview" class="image-preview"></div>
+                    </div>
+                    <button type="submit" class="btn">Adicionar Produto</button>
+                </form>
+            </section>
+
+            <section class="product-list">
+                <h2>Produtos Cadastrados</h2>
+                <div id="productsContainer" class="products-container"></div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Loja Frontend -->
+    <div id="storeFront" class="store-front">
+        <header>
+            <div class="container">
+                <h1>Minha Loja Online</h1>
+                <button id="adminAccessBtn" class="btn admin-btn">Admin</button>
+                <div class="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cartCounter">0</span>
+                </div>
+            </div>
+        </header>
+
+        <nav>
+            <div class="container">
+                <ul class="categories">
+                    <li><a href="#" data-category="all">Todos</a></li>
+                    <li><a href="#" data-category="papelaria">Papelaria</a></li>
+                    <li><a href="#" data-category="eletronicos">Eletrônicos</a></li>
+                    <li><a href="#" data-category="cosmeticos">Cosméticos</a></li>
+                    <li><a href="#" data-category="livros">Livros</a></li>
+                    <li><a href="#" data-category="roupas">Roupas</a></li>
+                    <li><a href="#" data-category="alimentos">Alimentos</a></li>
+                    <li><a href="#" data-category="brinquedos">Brinquedos</a></li>
+                    <li><a href="#" data-category="casa">Casa e Jardim</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <main class="container">
+            <div id="productsGrid" class="products-grid"></div>
+        </main>
+
+        <!-- Carrinho de Compras -->
+        <div id="cartSidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3>Carrinho de Compras</h3>
+                <button class="close-sidebar">&times;</button>
+            </div>
+            <div id="cartItems" class="cart-items"></div>
+            <div class="cart-footer">
+                <div class="cart-total">
+                    <p>Total: <span id="cartTotal">R$ 0,00</span></p>
+                </div>
+                <div class="cart-actions">
+                    <button id="clearCartBtn" class="btn secondary-btn">Limpar Carrinho</button>
+                    <button id="checkoutBtn" class="btn primary-btn">Enviar pelo WhatsApp</button>
+                </div>
+            </div>
+        </div>
+        <div id="sidebarOverlay" class="sidebar-overlay"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

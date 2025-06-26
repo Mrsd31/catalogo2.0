@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin | Catálogo Digital</title>
+    <link rel="stylesheet" href="adm-style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="admin-container">
+        <div class="admin-header">
+            <h1><i class="fas fa-store"></i> Painel Administrativo</h1>
+            <a href="index.html" class="back-to-store">
+                <i class="fas fa-arrow-left"></i> Voltar para a Loja
+            </a>
+        </div>
+        
+        <div class="admin-card">
+            <div class="card-header">
+                <h2><i class="fas fa-boxes"></i> Adicionar Novo Produto</h2>
+            </div>
+            
+            <div class="card-body">
+                <form id="add-product-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="product-name">Nome do Produto *</label>
+                            <input type="text" id="product-name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="product-code">Código *</label>
+                            <input type="text" id="product-code" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="product-price">Preço (R$) *</label>
+                            <input type="number" id="product-price" step="0.01" min="0" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="product-old-price">Preço Antigo (R$)</label>
+                            <input type="number" id="product-old-price" step="0.01" min="0">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="product-category">Categoria *</label>
+                            <select id="product-category" required>
+                                <option value="papelaria">Papelaria</option>
+                                <option value="eletronicos">Eletrônicos</option>
+                                <option value="cosmeticos">Cosméticos</option>
+                                <option value="livros">Livros</option>
+                                <option value="roupas">Roupas</option>
+                                <option value="alimentos">Alimentos</option>
+                                <option value="brinquedos">Brinquedos</option>
+                                <option value="casa-jardim">Casa e Jardim</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="product-stock">Estoque</label>
+                            <input type="number" id="product-stock" min="0" value="0">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="product-description">Descrição</label>
+                        <textarea id="product-description" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="product-image">Imagem do Produto *</label>
+                        <div class="file-upload">
+                            <input type="file" id="product-image" accept="image/png, image/jpeg" required>
+                            <label for="product-image" class="upload-btn">
+                                <i class="fas fa-cloud-upload-alt"></i> Escolher Imagem
+                            </label>
+                            <span class="file-name">Nenhum arquivo selecionado</span>
+                        </div>
+                        <div class="image-preview" id="image-preview">
+                            <span>Pré-visualização da imagem aparecerá aqui</span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="cancel-btn" id="cancel-btn">
+                            <i class="fas fa-times"></i> Cancelar
+                        </button>
+                        <button type="submit" class="save-btn">
+                            <i class="fas fa-save"></i> Salvar Produto
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="admin-card">
+            <div class="card-header">
+                <h2><i class="fas fa-list"></i> Todos os Produtos</h2>
+                <div class="search-box">
+                    <input type="text" placeholder="Buscar produtos...">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+            
+            <div class="card-body">
+                <div class="products-list" id="admin-products-container">
+                    <!-- Produtos serão listados aqui -->
+                </div>
+            </div>
+            
+            <div class="card-footer">
+                <div class="table-info">
+                    Mostrando <span id="showing">0</span> de <span id="total">0</span> produtos
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

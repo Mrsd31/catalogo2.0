@@ -8,7 +8,10 @@ document.addEventListener('DOMContentLoaded', function() {
         constructor() {
             this.products = JSON.parse(localStorage.getItem('products')) || [];
             this.cart = JSON.parse(localStorage.getItem('cart')) || [];
-            this.adminPassword = "admin123"; // Senha padrão - altere para a senha que desejar
+            this.adminCredentials = {
+                email: "admin@loja.com",  // Email padrão - altere para o que desejar
+                password: "Admin@1234"   // Senha padrão - altere para a que desejar
+            };
             this.init();
         }
 
@@ -23,20 +26,81 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // ADMIN ACCESS CONTROL
         checkAdminAccess() {
-            const storedPassword = localStorage.getItem('adminPassword');
-            const isAuthenticated = storedPassword === this.adminPassword;
+            // Verifica se já está autenticado
+            const authData = JSON.parse(localStorage.getItem('adminAuth')) || {};
             
-            if (!isAuthenticated) {
-                const password = prompt("Digite a senha de administrador:");
-                if (password === this.adminPassword) {
-                    localStorage.setItem('adminPassword', this.adminPassword);
-                    this.setupAdmin();
-                } else {
-                    alert("Senha incorreta. Redirecionando para a loja.");
-                    window.location.href = "index.html";
-                }
-            } else {
+            if (authData.email && authData.token && authData.token.expires > Date.now()) {
                 this.setupAdmin();
+                return;
+            }
+
+            // Mostra o modal de login
+            this.showLoginModal();
+        }
+
+        showLoginModal() {
+            // Cria o modal de login
+            const modalHTML = `
+                <div class="login-modal" id="login-modal">
+                    <div class="login-content">
+                        <div class="login-header">
+                            <h2><i class="fas fa-lock"></i> Acesso Administrativo</h2>
+                        </div>
+                        <div class="login-body">
+                            <form id="login-form">
+                                <div class="form-group">
+                                    <label for="login-email">Email</label>
+                                    <input type="email" id="login-email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="login-password">Senha</label>
+                                    <input type="password" id="login-password" required>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="submit" class="login-btn">
+                                        <i class="fas fa-sign-in-alt"></i> Entrar
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+            
+            // Configura o formulário de login
+            const loginForm = document.getElementById('login-form');
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                this.handleLogin();
+            });
+        }
+
+        handleLogin() {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            if (email === this.adminCredentials.email && password === this.adminCredentials.password) {
+                // Cria token de autenticação (válido por 1 dia)
+                const token = {
+                    value: Math.random().toString(36).substring(2) + Date.now().toString(36),
+                    expires: Date.now() + (24 * 60 * 60 * 1000) // 24 horas
+                };
+                
+                // Salva os dados de autenticação
+                localStorage.setItem('adminAuth', JSON.stringify({
+                    email: email,
+                    token: token
+                }));
+                
+                // Remove o modal de login
+                document.getElementById('login-modal').remove();
+                
+                // Inicializa a área admin
+                this.setupAdmin();
+            } else {
+                alert('Email ou senha incorretos!');
             }
         }
 
